@@ -1,0 +1,54 @@
+//##// Contest ID: typical90
+//##// Problem ID: typical90_b ( https://atcoder.jp/contests/typical90/tasks/typical90_b )
+//##// Title: 002. Encyclopedia of Parentheses（★3）
+//##// Language: OCaml (4.10.0)
+//##// Submitted: 2023-01-09 13:05:26 +0000 UTC ( https://atcoder.jp/contests/typical90/submissions/37907008 ) 
+
+open Core
+open Printf
+open Num
+open Scanf
+open IterLabels
+
+module Int = struct
+  let sqrt x = Int.of_float @@ Float.sqrt @@ Float.of_int x
+
+  include Int
+end
+
+let id x = x
+let si _ = scanf " %d" id
+let sc _ = scanf " %c" id
+let ss _ = scanf " %c" id
+let sn _ = scanf " %s" num_of_string
+let si2 _ = scanf " %d %d" (fun x y -> (x, y))
+let si3 _ = scanf " %d %d %d" (fun x y z -> (x, y, z))
+let pi ?(list = false) x = if list then printf " %d;" x else printf "%d\n" x
+let ps ?(list = false) x = if list then printf " %s;" x else printf "%s\n" x
+
+let pa ~p l =
+  printf "[";
+  Array.iter l ~f:(fun x -> p ?list:(Some true) x);
+  print_endline "]"
+
+let pl ~p l =
+  printf "[";
+  List.iter l ~f:(fun x -> p ?list:(Some true) x);
+  print_endline "]"
+
+let ( %/ ) x y = mod_num x y
+let i2n = num_of_int
+let zero = num_of_int 0
+let one = num_of_int 1
+let two = num_of_int 2
+
+(************)
+let nn = si ()
+
+let rec loop li l r =
+  if l + r = nn then List.rev li |> String.of_char_list |> ps;
+  if l < nn / 2 then loop ('(' :: li) (l + 1) r;
+  if l > r then loop (')' :: li) l (r + 1)
+
+let () =
+  loop [] 0 0
